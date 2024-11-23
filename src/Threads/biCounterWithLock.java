@@ -44,7 +44,7 @@ public class biCounterWithLock {
     }
 
         /*
-                there is another approach of doing the above example keeping thread safety is to used the AtomicInteger class
+                there is another approach of doing the above example keeping thread safety isto used the AtomicInteger class
          */
 
         AtomicInteger atomicIntegerI = new AtomicInteger();

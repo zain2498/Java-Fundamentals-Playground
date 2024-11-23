@@ -1,7 +1,6 @@
 public class StringMagic {
 
     public int countUppercaseLetters(String str) {
-        // TODO: Write your code here
         
         int len = str.length();
         System.out.println("length of String "+ len);
