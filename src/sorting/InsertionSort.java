@@ -14,7 +14,7 @@ class InsertionSort{
     public static void main (String args[]){
 
         int arr[] = {9,5,4,6,8,7,1,3,2};
-        for(int i =0; i < arr.length; i++){
+        for(int i =1; i < arr.length; i++){
             int current = arr[i];
             int j = i -1;
 
