@@ -1,2 +1,4 @@
-package sorting;public class ShellSort {
+package sorting;
+
+public class ShellSort {
 }
