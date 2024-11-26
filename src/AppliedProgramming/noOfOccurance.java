@@ -6,12 +6,12 @@ import java.util.Map;
 public class noOfOccurance {
 
      public  static String str = "madamm";
+     static int secondHighestCount=0;
 
      public static char findSecondHighestOccurance(){
 
          Map<Character, Integer> countMap = new HashMap<>();
          int highestCount = 0;
-         int secondHighestCount=0;
 
          for (char ch: str.toCharArray()){
              countMap.put(ch, countMap.getOrDefault(ch,0)+1);
@@ -40,7 +40,7 @@ public class noOfOccurance {
       char res =  findSecondHighestOccurance();
 
       if(res != '\0'){
-          System.out.println(res);
+          System.out.println( "char: "+ res + " - count- "+ secondHighestCount);
       }else {
           System.out.println("there is no second highest");
       }
