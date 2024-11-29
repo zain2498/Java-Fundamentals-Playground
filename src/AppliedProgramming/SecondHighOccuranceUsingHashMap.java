@@ -3,7 +3,7 @@ package AppliedProgramming;
 import java.util.HashMap;
 import java.util.Map;
 
-public class noOfOccurance {
+public class SecondHighOccuranceUsingHashMap {
 
      public  static String str = "madamm";
      static int secondHighestCount=0;

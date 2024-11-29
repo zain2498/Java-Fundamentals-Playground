@@ -34,11 +34,11 @@ public class Factorial {
     }
 
     public static void main (String args[]){
-        int n = 3;
-//        int fact = calcFactorial(n);
-//        System.out.println("Recursion.Factorial is "+ fact);
+        int n = 10;
+        int fact = calcFactorial(n);
+        System.out.println("Recursion.Factorial is "+ fact);
 
-        System.out.println(getLastDigit(999875));
+//        System.out.println(getLastDigit(999875));
     }
 }
 
