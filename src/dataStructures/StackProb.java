@@ -16,12 +16,11 @@ public class StackProb {
         stack.push("Data Structures");
         stack.push("Chemistry");
 
+        String myFavSub = stack.pop();
+        String myFavSub2 = stack.pop();
 
-//        String myFavSub = stack.pop();
-//        String myFavSub2 = stack.pop();
-
-//        System.out.println("out1 "+myFavSub);
-//        System.out.println("out2 "+myFavSub2);
+        System.out.println("out1 "+myFavSub);
+        System.out.println("out2 "+myFavSub2);
         System.out.println("View subject "+stack.peek());
         System.out.println(stack.search("Computer Science"));
         System.out.println(stack);

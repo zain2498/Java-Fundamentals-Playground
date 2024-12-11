@@ -1,6 +1,5 @@
 package sorting;
 
-import java.sql.SQLOutput;
 
 public class selectionSort {
 
