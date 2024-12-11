@@ -96,6 +96,6 @@ public class SingleLinkedList {
         singleLinkedList.addNode(10);
         singleLinkedList.searchNode(5);
         singleLinkedList.removeNode(10);
-        //singleLinkedList.displayNode();
+        singleLinkedList.displayNode();
     }
 }
