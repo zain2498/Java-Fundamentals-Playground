@@ -67,11 +67,12 @@ public class TrainReservationSystem {
         }
     }
 
-    public void reserveSeats(String coachNumber, int seats){
+    public int reserveSeats(String coachNumber, int seats){
+         int flag = 0;
         TrainCoach currCoach = head;
         if (currCoach == null) {
             System.out.println("There is no coach available in the train");
-            return;
+            return -1;
         }
 
         while (currCoach!=null){
@@ -82,10 +83,12 @@ public class TrainReservationSystem {
                     System.out.println("The available seats are left in train following coach number : " +coachNumber +"  are: "+currCoach.availableSeats);
                 }else {
                     System.out.println("We are extremely sorry,The number of seats: "+seats +" you requested to reserve is not available in train coach number: "+coachNumber);
+                    return 1;
                 }
             }
             currCoach = currCoach.next;
         }
+        return 0;
     }
 
     public void cancelReservation(String coachNumber, int seats){
@@ -189,8 +192,16 @@ public class TrainReservationSystem {
                         coachNumber = inputScanner.next();
                         System.out.println("Please enter the number of seats you want to reserve");
                         avaSeats = inputScanner.nextInt();
-                        trainReservationSystem.reserveSeats(coachNumber,avaSeats);
+                        int flag = trainReservationSystem.reserveSeats(coachNumber,avaSeats);
+                        while(flag ==1){
+                            if(flag ==1){
+                                System.out.println("Please enter the number of seats you want to reserve");
+                                avaSeats = inputScanner.nextInt();
+                                flag = trainReservationSystem.reserveSeats(coachNumber,avaSeats);
+                            }
+                        }
                         break;
+
                     case 5:
                         System.out.println("For cancellation of seats: we need the following details, Please cooperate");
                         System.out.println("Please provide us the coach number ");
@@ -221,7 +232,6 @@ public class TrainReservationSystem {
             System.out.println("Sorry !!! You cannot add more seats than the capacity in train coach.");
             return false;
         }
-
         return true;
     }
 }
