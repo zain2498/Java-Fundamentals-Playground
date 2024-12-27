@@ -67,22 +67,22 @@ public class TrainReservationSystem {
         }
     }
 
-    public int reserveSeats(String coachNumber, int seats){
-         int flag = 0;
+    public int reserveSeats(String coachNumber, int seats) {
+        int flag = 0;
         TrainCoach currCoach = head;
         if (currCoach == null) {
             System.out.println("There is no coach available in the train");
             return -1;
         }
 
-        while (currCoach!=null){
-            if (currCoach.coachNumber.equalsIgnoreCase(coachNumber)){
-                if (seats <= currCoach.availableSeats){
+        while (currCoach != null) {
+            if (currCoach.coachNumber.equalsIgnoreCase(coachNumber)) {
+                if (seats <= currCoach.availableSeats) {
                     currCoach.availableSeats = currCoach.availableSeats - seats;
-                    System.out.println("Congrats!!! Your number of seats: "+seats + " are reserved in the following train with coach number: "+coachNumber);
-                    System.out.println("The available seats are left in train following coach number : " +coachNumber +"  are: "+currCoach.availableSeats);
-                }else {
-                    System.out.println("We are extremely sorry,The number of seats: "+seats +" you requested to reserve is not available in train coach number: "+coachNumber);
+                    System.out.println("Congrats!!! Your number of seats: " + seats + " are reserved in the following train with coach number: " + coachNumber);
+                    System.out.println("The available seats are left in train following coach number : " + coachNumber + "  are: " + currCoach.availableSeats);
+                } else {
+                    System.out.println("We are extremely sorry,The number of seats: " + seats + " you requested to reserve is not available in train coach number: " + coachNumber);
                     return 1;
                 }
             }
@@ -91,19 +91,19 @@ public class TrainReservationSystem {
         return 0;
     }
 
-    public void cancelReservation(String coachNumber, int seats){
+    public void cancelReservation(String coachNumber, int seats) {
         TrainCoach currCoach = head;
         if (currCoach == null) {
             System.out.println("There is no coach available in the train");
             return;
         }
-        while (currCoach!=null){
-            if(currCoach.coachNumber.equalsIgnoreCase(coachNumber)){
-                if (currCoach.capacity>= currCoach.availableSeats + seats){
+        while (currCoach != null) {
+            if (currCoach.coachNumber.equalsIgnoreCase(coachNumber)) {
+                if (currCoach.capacity >= currCoach.availableSeats + seats) {
                     currCoach.availableSeats = currCoach.availableSeats + seats;
-                    System.out.println("Dear Customer! Your request to cancel the reservation of seats is completed and the number of seats: "+ seats + " in the following train coach number: "+ coachNumber+" is cancelled.");
-                    System.out.println("The available seats in train are: "+currCoach.availableSeats);
-                }else {
+                    System.out.println("Dear Customer! Your request to cancel the reservation of seats is completed and the number of seats: " + seats + " in the following train coach number: " + coachNumber + " is cancelled.");
+                    System.out.println("The available seats in train are: " + currCoach.availableSeats);
+                } else {
                     System.out.println("Sorry Sir!!! We are unable to process your request at this moment,Please try again later,Thanks for understanding.");
                 }
             }
@@ -118,7 +118,7 @@ public class TrainReservationSystem {
             System.out.println("There is no coach available in the train");
             return;
         }
-       // System.out.println("Below are the available train coaches:");
+        // System.out.println("Below are the available train coaches:");
         while (currCoach != null) {
             System.out.println("Coach-Number: " + currCoach.coachNumber + ", Capacity: " + currCoach.capacity + ", Available-Seats: " + currCoach.availableSeats);
             currCoach = currCoach.next;
@@ -126,32 +126,33 @@ public class TrainReservationSystem {
 
     }
 
-    public void displayAllTrainCoachesInReverseOrder(){
+    public void displayAllTrainCoachesInReverseOrder() {
         TrainCoach currCoach = tail;
-        if(currCoach == null){
+        if (currCoach == null) {
             System.out.println("There is no coach available in the train");
             return;
         }
 
-        while (currCoach!=null){
+        while (currCoach != null) {
             System.out.println("Coach-Number: " + currCoach.coachNumber + ", Capacity: " + currCoach.capacity + ", Available-Seats: " + currCoach.availableSeats);
             currCoach = currCoach.prev;
         }
     }
+
     public static void main(String[] args) {
         Scanner inputScanner = null;
         TrainReservationSystem trainReservationSystem = null;
-        String coachNumber="";
-        int capacity=0;
-        int avaSeats=0;
-        try{
+        String coachNumber = "";
+        int capacity = 0;
+        int avaSeats = 0;
+        try {
             trainReservationSystem = new TrainReservationSystem();
             trainReservationSystem.addCoach("abc123", 14, 6);
             trainReservationSystem.addCoach("abc987", 12, 10);
-             inputScanner = new Scanner(System.in);
+            inputScanner = new Scanner(System.in);
             boolean isRunning = true;
             boolean isApplicable = false;
-            while(isRunning){
+            while (isRunning) {
                 System.out.println("\nPlease choose the option below:");
                 System.out.println("Press 1 to add a new coach");
                 System.out.println("Press 2 to remove a new coach");
@@ -160,20 +161,20 @@ public class TrainReservationSystem {
                 System.out.println("Press 5 to cancel seat reservation in a specific coach");
                 System.out.println("Press 0 to exit the program");
                 int usrChoice = inputScanner.nextInt();
-                switch (usrChoice){
+                switch (usrChoice) {
                     case 1:
                         System.out.println("Please enter a coach number");
                         coachNumber = inputScanner.next();
-                        while (!isApplicable){
+                        while (!isApplicable) {
                             System.out.println("Please enter capacity");
                             capacity = inputScanner.nextInt();
                             System.out.println("Please enter available seats");
                             avaSeats = inputScanner.nextInt();
 
-                            isApplicable = validateUserRequest(capacity,avaSeats);
+                            isApplicable = validateUserRequest(capacity, avaSeats);
                         }
-                        if (isApplicable){
-                            trainReservationSystem.addCoach(coachNumber,capacity,avaSeats);
+                        if (isApplicable) {
+                            trainReservationSystem.addCoach(coachNumber, capacity, avaSeats);
                         }
                         break;
                     case 2:
@@ -192,23 +193,22 @@ public class TrainReservationSystem {
                         coachNumber = inputScanner.next();
                         System.out.println("Please enter the number of seats you want to reserve");
                         avaSeats = inputScanner.nextInt();
-                        int flag = trainReservationSystem.reserveSeats(coachNumber,avaSeats);
-                        while(flag ==1){
-                            if(flag ==1){
+                        int flag = trainReservationSystem.reserveSeats(coachNumber, avaSeats);
+                        while (flag == 1) {
+                            if (flag == 1) {
                                 System.out.println("Please enter the number of seats you want to reserve");
                                 avaSeats = inputScanner.nextInt();
-                                flag = trainReservationSystem.reserveSeats(coachNumber,avaSeats);
+                                flag = trainReservationSystem.reserveSeats(coachNumber, avaSeats);
                             }
                         }
                         break;
-
                     case 5:
                         System.out.println("For cancellation of seats: we need the following details, Please cooperate");
                         System.out.println("Please provide us the coach number ");
                         coachNumber = inputScanner.next();
                         System.out.println("Please tell us how many seats you want to cancelled");
                         avaSeats = inputScanner.nextInt();
-                        trainReservationSystem.cancelReservation(coachNumber,avaSeats);
+                        trainReservationSystem.cancelReservation(coachNumber, avaSeats);
                         break;
                     case 0:
                         isRunning = false;
@@ -218,17 +218,17 @@ public class TrainReservationSystem {
                         break;
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw e;
-        }finally {
+        } finally {
             inputScanner.close();
         }
     }
 
     private static boolean validateUserRequest(int capacity, int avaSeats) {
 
-        if(capacity < avaSeats){
+        if (capacity < avaSeats) {
             System.out.println("Sorry !!! You cannot add more seats than the capacity in train coach.");
             return false;
         }
