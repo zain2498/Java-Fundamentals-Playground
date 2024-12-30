@@ -3,139 +3,142 @@ package AppliedProgramming;
 import java.util.Scanner;
 
 public class TrainReservationSystem {
-    TrainCoach head = null;
-    TrainCoach tail = null;
 
-    static class TrainCoach {
+    class TrainCoach{
         String coachNumber;
         int capacity;
-        int availableSeats;
-        TrainCoach next;
-        TrainCoach prev;
-
-        public TrainCoach(String coachNumber, int capacity, int availableSeats) {
+        int seats;
+        TrainCoach nextCoach;
+        TrainCoach prevCoach;
+        TrainCoach(String coachNumber, int capacity, int seats){
             this.coachNumber = coachNumber;
             this.capacity = capacity;
-            this.availableSeats = availableSeats;
-            this.next = null;
-            this.prev = null;
+            this.seats = seats;
+            nextCoach = null;
+            prevCoach = null;
         }
     }
-
-    public void addCoach(String coachNumber, int capacity, int availableSeats) {
-        TrainCoach trainCoach = new TrainCoach(coachNumber, capacity, availableSeats);
-        if (head == null) {
-            head = trainCoach;
-            tail = trainCoach;
-            head.prev = null;
-            tail.next = null;
-        } else {
-            tail.next = trainCoach;
-            trainCoach.prev = tail;
-            tail = trainCoach;
-            trainCoach.next = null;
+    private TrainCoach firstCoach = null;
+    private TrainCoach lastCoach = null;
+    public void addCoach(String coachNumber, int capacity, int seats){
+        TrainCoach newTrainCoach = new TrainCoach(coachNumber, capacity, seats);
+        if (firstCoach == null){
+            firstCoach = newTrainCoach;
+            lastCoach = newTrainCoach;
+            firstCoach.prevCoach = null;
+            lastCoach.nextCoach= null;
+        }else {
+            lastCoach.nextCoach = newTrainCoach;
+            newTrainCoach.prevCoach = lastCoach;
+            lastCoach= newTrainCoach;
+            newTrainCoach.nextCoach = null;
         }
+        System.out.println("Your train coach is successfully addeed in the list");
     }
 
-    public void removeTrainCoach(String coachNumber) {
-        TrainCoach currCoach = head;
-        if (currCoach == null) {
-            System.out.println("There is no coach available in the train");
-            return;
+    TrainCoach prevTrainCoach = null;
+    public void removeTrainCoach(String coachNumber){
+        TrainCoach currentTrainCoach= firstCoach;
+        if (firstCoach == null){
+            System.out.println("There is no train coach in your list");
         }
-        while (currCoach != null) {
-            if (currCoach.coachNumber.equalsIgnoreCase(coachNumber)) {
-                if (currCoach == head) {
-                    head = head.next;
-                    System.out.println("coach is removed from the front " + currCoach.coachNumber);
-                    if (head != null) {
-                        head.prev = null;
-                    }
-                } else if (currCoach == tail) {
-                    tail = tail.prev;
-                    System.out.println("coach is removed from the last " + currCoach.coachNumber);
-                    if (tail != null) {
-                        tail.next = null;
-                    }
-                } else {
-                    head.next.prev = currCoach.next;
-                    tail.prev.next = currCoach.prev;
-                    System.out.println("coach is removed from in between " + currCoach.coachNumber);
-                }
-            }
-            currCoach = currCoach.next;
+
+        while (currentTrainCoach!=null){
+         if (currentTrainCoach.coachNumber.equalsIgnoreCase(coachNumber)){
+             if (currentTrainCoach == firstCoach){
+                 firstCoach = currentTrainCoach.nextCoach;
+                 System.out.println("Your requested train coach is the first coach is removed from the list. "+coachNumber);
+                 if (firstCoach!=null){
+                     firstCoach.prevCoach = null;
+                 }
+                 break;
+             } else if (currentTrainCoach == lastCoach) {
+                 lastCoach = currentTrainCoach.prevCoach;
+                 System.out.println("Your requested train coach is the last coach is removed from the list. "+coachNumber);
+                 if (lastCoach!=null){
+                     lastCoach.nextCoach = null;
+                 }
+                 break;
+             }else {
+                 System.out.println("Your requested train coach is removed within the list. "+coachNumber);
+                 prevTrainCoach.nextCoach = currentTrainCoach.nextCoach;
+                 currentTrainCoach = currentTrainCoach.nextCoach;
+                 currentTrainCoach.prevCoach = prevTrainCoach;
+             }
+             return;
+         }
+         prevTrainCoach = currentTrainCoach;
+         currentTrainCoach = currentTrainCoach.nextCoach;
         }
+        System.out.println("Your requested train coach is not present in our list.");
     }
 
-    public int reserveSeats(String coachNumber, int seats) {
-        int flag = 0;
-        TrainCoach currCoach = head;
-        if (currCoach == null) {
-            System.out.println("There is no coach available in the train");
+    public int reserveSeats(String coachNumber, int seats){
+        TrainCoach currentCoach = firstCoach;
+        if (firstCoach== null){
+            System.out.println("List of coach is empty");
             return -1;
         }
-
-        while (currCoach != null) {
-            if (currCoach.coachNumber.equalsIgnoreCase(coachNumber)) {
-                if (seats <= currCoach.availableSeats) {
-                    currCoach.availableSeats = currCoach.availableSeats - seats;
-                    System.out.println("Congrats!!! Your number of seats: " + seats + " are reserved in the following train with coach number: " + coachNumber);
-                    System.out.println("The available seats are left in train following coach number : " + coachNumber + "  are: " + currCoach.availableSeats);
-                } else {
-                    System.out.println("We are extremely sorry,The number of seats: " + seats + " you requested to reserve is not available in train coach number: " + coachNumber);
-                    return 1;
+        while (currentCoach!= null){
+            if (currentCoach.coachNumber.equalsIgnoreCase(coachNumber)){
+                if (currentCoach.seats >= seats){
+                    System.out.println("Your seats: " + seats + " is reserved against this coach number: "+coachNumber);
+                    currentCoach.seats = currentCoach.seats- seats;
+                    System.out.println("now the available seat counts are "+ currentCoach.seats);
+                    return 0;
+                }else {
+                    System.out.println("The requested seats are more than the available seats so we cannot proceed with your seats reservation, Please try again!");
                 }
             }
-            currCoach = currCoach.next;
+            currentCoach = currentCoach.nextCoach;
         }
-        return 0;
+        return 1;
     }
 
-    public void cancelReservation(String coachNumber, int seats) {
-        TrainCoach currCoach = head;
-        if (currCoach == null) {
-            System.out.println("There is no coach available in the train");
+    public void cancelReservation(String coachNumber, int seats){
+        TrainCoach currentCoach = firstCoach;
+        if (currentCoach == null){
+            System.out.println("The train has no coach present at the moment, Sorry!!!");
             return;
         }
-        while (currCoach != null) {
-            if (currCoach.coachNumber.equalsIgnoreCase(coachNumber)) {
-                if (currCoach.capacity >= currCoach.availableSeats + seats) {
-                    currCoach.availableSeats = currCoach.availableSeats + seats;
-                    System.out.println("Dear Customer! Your request to cancel the reservation of seats is completed and the number of seats: " + seats + " in the following train coach number: " + coachNumber + " is cancelled.");
-                    System.out.println("The available seats in train are: " + currCoach.availableSeats);
-                } else {
-                    System.out.println("Sorry Sir!!! We are unable to process your request at this moment,Please try again later,Thanks for understanding.");
+        while (currentCoach!= null){
+            if (currentCoach.coachNumber.equalsIgnoreCase(coachNumber)){
+                if (currentCoach.capacity >= currentCoach.seats + seats){
+                    System.out.println("The number seats: "+seats+" you have requested for cancellation is successfully done against this coach number: "+ coachNumber);
+                    currentCoach.seats = currentCoach.seats + seats;
+                    break;
+                }else {
+                    System.out.println("Please enter a valid number of seats which will not exceeed our coach capacity");
                 }
+            }else {
+                System.out.println("Please enter a valid coach number "+ coachNumber);
             }
-            currCoach = currCoach.next;
+            currentCoach = currentCoach.nextCoach;
         }
-
     }
 
-    public void displayAllTrainCoaches() {
-        TrainCoach currCoach = head;
-        if (currCoach == null) {
-            System.out.println("There is no coach available in the train");
+    public void displayAllTrainCoaches(){
+        TrainCoach currentCoach = firstCoach;
+        if (currentCoach== null){
+            System.out.println("Train coach is empty. Please try again later!");
             return;
         }
-        // System.out.println("Below are the available train coaches:");
-        while (currCoach != null) {
-            System.out.println("Coach-Number: " + currCoach.coachNumber + ", Capacity: " + currCoach.capacity + ", Available-Seats: " + currCoach.availableSeats);
-            currCoach = currCoach.next;
+        System.out.println("Below are the list of train coaches present:");
+        while (currentCoach!= null){
+            System.out.println("Coach Number: "+ currentCoach.coachNumber + " available seats: "+currentCoach.seats+" coach capacity: "+ currentCoach.capacity);
+            currentCoach = currentCoach.nextCoach;
         }
-
     }
-
-    public void displayAllTrainCoachesInReverseOrder() {
-        TrainCoach currCoach = tail;
-        if (currCoach == null) {
-            System.out.println("There is no coach available in the train");
+    public void displayAllTrainCoachesInReverseOrder(){
+        TrainCoach currentCoach = lastCoach;
+        if (currentCoach== null){
+            System.out.println("Train coach is empty. Please try again later!");
             return;
         }
-
-        while (currCoach != null) {
-            System.out.println("Coach-Number: " + currCoach.coachNumber + ", Capacity: " + currCoach.capacity + ", Available-Seats: " + currCoach.availableSeats);
-            currCoach = currCoach.prev;
+        System.out.println("Below are the list of train coaches present:");
+        while (currentCoach!= null){
+            System.out.println("Coach Number: "+ currentCoach.coachNumber + " available seats: "+currentCoach.seats+" coach capacity: "+ currentCoach.capacity);
+            currentCoach = currentCoach.prevCoach;
         }
     }
 

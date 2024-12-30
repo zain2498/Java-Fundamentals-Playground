@@ -2,103 +2,110 @@ package dataStructures;
 
 public class DoublyLinkedList {
 
-    Node head = null;
-    Node tail = null;
-
     class Node {
         int data;
-        Node next;
-        Node prev;
+        Node nextNode;
+        Node prevNode;
 
-        public Node(int data) {
-            this.data = data;
-            this.next = null;
-            this.prev = null;
+        Node(int element) {
+            this.data = element;
+            nextNode = null;
+            prevNode = null;
         }
     }
 
-    public void addNode(int data) {
-        Node newNode = new Node(data);
+    public Node head = null;
+    public Node tail = null;
 
+    public void addNode(int element) {
+        Node node = new Node(element);
         if (head == null) {
-            head = newNode;
-            tail = newNode;
-            head.prev = null;
-            tail.next = null;
+            head = node;
+            tail = node;
+            head.nextNode = null;
+            tail.prevNode = null;
         } else {
-            tail.next = newNode;
-            newNode.prev = tail;
-            tail = newNode;
-            newNode.next = null;
+            tail.nextNode = node;
+            node.prevNode = tail;
+            tail = node;
+            node.nextNode = null;
         }
     }
 
-    public void searchForNode(int key) {
+    public void searchNode(int key) {
         Node curr = head;
         if (head == null) {
-            System.out.println("List is empty");
+            System.out.println("Your list is empty");
             return;
         }
         while (curr != null) {
             if (curr.data == key) {
-                System.out.println("\nnode " + key + " is found");
+                System.out.println("Your request node for search is found " + key);
+                return;
             }
-            curr = curr.next;
+            curr = curr.nextNode;
         }
-    }
-
-    public void removeNode(int key) {
-        Node curr = head;
-        if (head == null) {
-            System.out.println("List is empty");
-            return;
-        }
-
-        while (curr != null) {
-            if (curr.data == key) {
-                if (curr == head) {
-                    System.out.println("Node is removed from head");
-                    head = head.next;
-                    if (head != null) {
-                        head.prev = null;
-                    }
-                } else if (curr == tail) {
-                    tail = tail.prev;
-                    System.out.println("Node is removed from tail");
-                    if (tail != null) {
-                        tail.next = null;
-                    }
-                } else {
-                    head.next.prev = curr.next;
-                    tail.prev.next = curr.prev;
-                    System.out.println("Node is removed " + key + " from the list");
-                }
-            }
-            curr = curr.next;
-        }
-
+        System.out.println("Your requested node for search is not found in the list");
     }
 
     public void displayAllNodes() {
         Node curr = head;
         if (head == null) {
-            System.out.println("List is empty");
+            System.out.println("Your list is empty");
             return;
         }
-        System.out.println("Nodes are given below");
+        System.out.println("Diplaying all the nodes present in the list below:");
         while (curr != null) {
             System.out.print(curr.data + " ");
-            curr = curr.next;
+            curr = curr.nextNode;
         }
-        System.out.println();
+    }
+
+    public void removeNode(int key) {
+        Node currNode = head;
+
+        if (head == null) {
+            System.out.println("Your list is empty");
+            return;
+        }
+
+        while (currNode != null) {
+            if (currNode.data == key) {
+                if (currNode == head) {
+                    head = currNode.nextNode;
+                    if (head != null) {
+                        head.prevNode = null;
+                    }
+                    System.out.println("Your requested node is removing from the head " + key);
+                } else if (currNode == tail) {
+                    tail = currNode.prevNode;
+                    if (tail != null) {
+                        tail.nextNode = null;
+                    }
+                    System.out.println("Your requested node is removing from the tail " + key);
+                } else {
+                    currNode.nextNode.prevNode = currNode.prevNode;
+                    currNode.prevNode.nextNode = currNode.nextNode;
+                    System.out.println("Your requested node is removed within the list " + key);
+                }
+                return;
+            }
+            currNode = currNode.nextNode;
+        }
+        System.out.println("OOPS! The requested node "+ key+" is not found in the list ");
     }
 
     public static void main(String[] args) {
         DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
         doublyLinkedList.addNode(1);
         doublyLinkedList.addNode(5);
+        doublyLinkedList.addNode(2);
+        doublyLinkedList.addNode(9);
+        doublyLinkedList.addNode(3);
         doublyLinkedList.addNode(6);
+        doublyLinkedList.removeNode(5);
+        doublyLinkedList.searchNode(9);
         doublyLinkedList.displayAllNodes();
-        doublyLinkedList.removeNode(6);
+
     }
 }
