@@ -9,61 +9,57 @@ public class CircularQueue {
 
     public CircularQueue(int size) {
         arrOfQueue = new int[size];
-        count=0;
         frontOfQueue = -1;
         rareOfQueue = -1;
+        count = 0;
     }
 
-    public void enQueue(int value) {
-
+    public void enQueue(int ele){
         if (isFullQueue()){
-            System.out.println("Queue is full, You cannot add more elements to it");
+            System.out.println("Queue is full");
             return;
         }
-
-        rareOfQueue = (rareOfQueue + 1) % arrOfQueue.length;
-        arrOfQueue[rareOfQueue] = value;
-
-        if(frontOfQueue ==-1){
+        rareOfQueue = (rareOfQueue + 1)%arrOfQueue.length;
+        arrOfQueue[rareOfQueue] = ele;
+        if (frontOfQueue==-1){
             frontOfQueue = rareOfQueue;
         }
-        count ++;
+        count++;
     }
-
-    public int deQueue() {
+    public int deQueue(){
         int element = -1;
-
-        if (isEmptyQueue()) {
-            System.out.println("Queue is empty, there is no item to be dequeue");
+        if (isEmptyQueue()){
+            System.out.println("Queue is empty");
             return -1;
         }
-
         element = arrOfQueue[frontOfQueue];
-        arrOfQueue[frontOfQueue] = 0;
-
-        frontOfQueue = (frontOfQueue + 1) % arrOfQueue.length;
-        count--;
-
-        if(count==0){
-            frontOfQueue = -1;
-            rareOfQueue = -1;
+        arrOfQueue[frontOfQueue]=0;
+        frontOfQueue = (frontOfQueue+1)%arrOfQueue.length;
+        if (count==0){
+            frontOfQueue=-1;
+            rareOfQueue=-1;
         }
-
+        count--;
+        System.out.println("deque element "+element);
         return element;
     }
-
-    public void displayQueueElements() {
-        if(isEmptyQueue()){
-            System.out.println("Queue is empty, there is nothing to be display ");
-            return;
+    public void displayQueueElements(){
+        if (isEmptyQueue()){
+            System.out.println("Queue is empty");
         }
-
         System.out.print("[ ");
-       for (int i = 0; i < count; i++){
-           int index = (frontOfQueue + i)%arrOfQueue.length;
-           System.out.print(arrOfQueue[index]+" ");
-       }
-        System.out.println("]");
+        for (int i =0; i < count; i++){
+            int index = (frontOfQueue + i)%arrOfQueue.length;
+            System.out.print(arrOfQueue[index]+" ");
+        }
+        System.out.print("]\n");
+    }
+    public void peekQueueElement(){
+        if (isEmptyQueue()){
+            System.out.println("Queue is empty");
+        }else {
+            System.out.println("peeking an element "+ arrOfQueue[frontOfQueue]);
+        }
     }
 
     public boolean isFullQueue() {
@@ -72,14 +68,6 @@ public class CircularQueue {
 
     public boolean isEmptyQueue() {
         return count == 0;
-    }
-
-    public void peekQueueElement() {
-        if(isEmptyQueue()){
-            System.out.println("Queue is empty, there is nothing to be peeked ");
-        }else {
-            System.out.println("peek element " + arrOfQueue[frontOfQueue]);
-        }
     }
 
     public static void main(String[] args) {

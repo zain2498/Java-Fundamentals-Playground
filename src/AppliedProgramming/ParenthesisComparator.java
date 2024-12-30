@@ -3,38 +3,33 @@ package AppliedProgramming;
 import java.util.Stack;
 
 public class ParenthesisComparator {
-    private boolean isbalanced= true;
-    //    {[( - )]}  / {([ - ])}  / [{( - )}]  / [({ - })]  / ([{ - }])  / ({[ - ]})
-    public boolean isParenthesisBalanced(Stack<String> listOfString){
-        Stack<Character> charStack = new Stack<>();
-        for (String str : listOfString ){
+    private boolean isbalanced = true;
+
+    public boolean isParenthesisBalanced(Stack<String> listOfString) {
+        Stack<Character> characterStack = new Stack<>();
+        for (String str : listOfString) {
             char character = str.charAt(0);
 
-            if(character == '{' || character == '(' || character == '['){
-                charStack.push(character);
-            } else if (character == ')' || character == '}' || character == ']'){
+            if (character == '{' || character == '(' || character == '[') {
+                characterStack.push(character);
+            } else if (character == ')' || character == '}' || character == ']') {
 
-                if(charStack.isEmpty()){
+                if (characterStack.isEmpty()) {
                     isbalanced = false;
-                    break;
+                    return isbalanced;
                 }
-                char topOfChar = charStack.pop();
-                System.out.println("poped out the top character: "+topOfChar);
 
-                if (!((character == ')' && topOfChar == '(') ||
-                        (character == ']' && topOfChar == '[') ||
-                        (character == '}' && topOfChar == '{'))) {
+                char topEle = characterStack.pop();
+                System.out.println("poped out element " + topEle);
+
+                if (!((character == ')' && topEle == '(') || (character == '}' && topEle == '{') || (character == ']' && topEle == '[')))
+                {
                     isbalanced = false;
-                    break;
+                    return isbalanced;
                 }
             }
         }
-
-        if(!charStack.isEmpty()){
-            isbalanced = false;
-        }
-
-        System.out.println(isbalanced);
+        System.out.println("its balanced");
         return isbalanced;
     }
 
