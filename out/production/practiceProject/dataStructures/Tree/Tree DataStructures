@@ -1,0 +1,28 @@
+1. HashMap
+Definition: Implements the Map interface and uses a hash table to store key-value pairs.
+Key Features:
+Allows one null key and multiple null values.
+Unordered: Does not maintain the order of insertion.
+Efficient for most general-purpose applications.
+Time Complexity:
+O(1) for put() and get() operations (in the average case).
+O(n) in the worst case due to hash collisions.
+2. LinkedHashMap
+Definition: Extends HashMap but maintains a doubly-linked list to preserve the insertion order.
+Key Features:
+Retains the order in which keys are inserted.
+Slightly slower than HashMap due to the overhead of maintaining the order.
+3. TreeMap
+Definition: Implements the NavigableMap interface and uses a Red-Black Tree to store key-value pairs in sorted order.
+Key Features:
+Keys are sorted either by their natural ordering or a custom comparator.
+Does not allow null keys (but allows null values).
+Ideal when sorted keys are needed.
+Time Complexity:
+O(log n) for put() and get() operations.
+4. ConcurrentHashMap
+Definition: A thread-safe implementation of HashMap that is highly efficient for multi-threaded environments.
+Key Features:
+Divides the map into segments to reduce lock contention.
+Does not allow null keys or values.
+Useful for concurrent read/write operations without external synchronization.

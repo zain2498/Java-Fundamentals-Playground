@@ -33,26 +33,29 @@ public class BankingSystem {
         System.out.println("\nTo Create a bank account you have to enter the following details:\n");
         System.out.println("1.Please enter your account number");
         int accountNumber = userInput.nextInt();
-        if (accountNumber <= 0) {
-            System.out.println("Error creating bank account: " + new IllegalArgumentException("Please enter a valid account number in order to open your bank account"));
-            return null;
+        boolean valid = isAccountNumberValid(accountNumber);
+        while (!valid){
+            System.out.println("1.Please enter your account number");
+             accountNumber = userInput.nextInt();
+             valid = isAccountNumberValid(accountNumber);
         }
         System.out.println("2.Please enter your Account Name");
         String accountName = userInput.next();
-        String noSpecialCharacterAllowed = "^[a-zA-Z\\s]+$";
-        if (!accountName.matches(noSpecialCharacterAllowed)) {
-            System.out.println("Error creating bank account: " + new IllegalArgumentException("You cannot add special character in your name, Please enter your name as per CNIC"));
-            return null;
-        } else if (accountName.isEmpty()) {
-            System.out.println("Error creating bank account: " + new IllegalArgumentException("Please enter your name as per CNIC to open up your bank account"));
-            return null;
+        valid = isAccountHolderNameValid(accountName);
+        while (!valid){
+            System.out.println("2.Please enter your Account Name");
+            accountName = userInput.next();
+            valid = isAccountHolderNameValid(accountName);
         }
         System.out.println("3.Please enter your current balance");
         double currBalance = userInput.nextDouble();
-        if (currBalance <= 0) {
-            System.out.println("Error creating bank account: " + new InsufficientFundsException("Please make sure that the initial amount you have added should be greater than zero in order to open your bank account"));
-            return null;
+        valid = isAccountBalanceValid(currBalance);
+        while (!valid){
+            System.out.println("3.Please enter your current balance");
+            currBalance = userInput.nextDouble();
+            valid = isAccountBalanceValid(currBalance);
         }
+
         bankAccount = new BankAccount(accountNumber, accountName, currBalance);
         return bankAccount;
     }
@@ -88,5 +91,37 @@ public class BankingSystem {
                     System.out.println("Please enter a valid amount to proceed.");
             }
         }
+    }
+
+   public static boolean isAccountNumberValid(int accountNumber){
+        if (accountNumber <= 0) {
+            System.out.println("Error creating bank account: " + new IllegalArgumentException("Please enter a valid account number in order to open your bank account"));
+            return false;
+        }else if (accountNumber < 10 || accountNumber < 100 || accountNumber < 1000 || accountNumber < 10000 || accountNumber < 100000){
+            System.out.println("Error creating bank account: " + new IllegalArgumentException("Please enter a valid account number of more than 6 digits, in order to open your bank account"));
+            return false;
+        }
+        return true;
+    }
+    public static boolean isAccountHolderNameValid(String accountName){
+        String noSpecialCharacterAllowed = "^[a-zA-Z\\s]+$";
+        if (!accountName.matches(noSpecialCharacterAllowed)) {
+            System.out.println("Error creating bank account: " + new IllegalArgumentException("You cannot add special character in your name, Please enter your name as per CNIC"));
+            return false;
+        } else if (accountName.isEmpty()) {
+            System.out.println("Error creating bank account: " + new IllegalArgumentException("Please enter your name as per CNIC to open up your bank account"));
+            return false;
+        } else if (accountName.length()<3) {
+            System.out.println("Error creating bank account: "+ new IllegalArgumentException("Please enter a valid name as per your CNIC to meet the government laws"));
+            return false;
+        }
+        return true;
+    }
+    public static boolean isAccountBalanceValid(double balanceAmount){
+        if (balanceAmount <= 0 || balanceAmount < 500) {
+            System.out.println("Error creating bank account: " + new InsufficientFundsException("Please make sure that the initial amount you have added should be greater than zero in order to open your bank account"));
+            return false;
+        }
+        return true;
     }
 }
