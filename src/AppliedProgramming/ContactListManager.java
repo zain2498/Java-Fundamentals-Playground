@@ -1,140 +1,143 @@
 package AppliedProgramming;
 
+import java.security.cert.CertPath;
 import java.util.Scanner;
 
 public class ContactListManager {
 
     class Contact {
-        String name;
-        String phoneNumber;
-        String email;
-        Contact next;
+        String contactName;
+        String emailAddress;
+        String contactNumber;
+        Contact nextContact;
+        Contact prevContact;
 
-        public Contact(String name, String email, String phoneNumber) {
-            this.email = email;
-            this.name = name;
-            this.phoneNumber = phoneNumber;
-            this.next = null;
+        Contact(String name, String email, String phoneNumber) {
+            this.contactName = name;
+            this.emailAddress = email;
+            this.contactNumber = phoneNumber;
+            nextContact = null;
+            prevContact = null;
         }
     }
 
-    public Contact head = null;
-    public Contact tail = null;
+    private Contact firstContact = null;
+    private Contact lastContact = null;
 
-    public void addContact(String name, String email, String phoneNumber) {
-        Contact adContact = new Contact(name, email, phoneNumber);
-
-        if (head == null) {
-            head = adContact;
-            tail = adContact;
+    public void addContact(String name, String email, String phone) {
+        Contact createContact = new Contact(name, email, phone);
+        if (firstContact == null) {
+            firstContact = createContact;
+            lastContact = createContact;
+            System.out.println("Your first contact is successfully added");
+            return;
         } else {
-            tail.next = adContact;
-            tail = adContact;
+            lastContact.nextContact = createContact;
+            lastContact = createContact;
         }
+        System.out.println("Your contact details are successfully added");
+    }
+
+    public void searchContact(String name) {
+        if (firstContact == null) {
+            System.out.println("Your contact list is empty");
+            return;
+        }
+        Contact currentContact = firstContact;
+        while (currentContact != null) {
+            if (currentContact.contactName.equalsIgnoreCase(name)) {
+                System.out.println("Your contact is found below are the contact details:");
+                System.out.println("Contact Name : " + currentContact.contactName);
+                System.out.println("Contact Email Address : " + currentContact.emailAddress);
+                System.out.println("Contact Phone Number : " + currentContact.contactNumber);
+            }
+            currentContact = currentContact.nextContact;
+        }
+    }
+
+    public void displayAllContacts() {
+        Contact currContact = firstContact;
+        System.out.println("Contact list is shown below: ");
+        while (currContact != null) {
+            System.out.print("Contact Name: " + currContact.contactName + ", Email Address: " + currContact.emailAddress + ", Contact Number: " + currContact.contactNumber);
+            System.out.println();
+            currContact = currContact.nextContact;
+        }
+    }
+
+    public void deleteContact(String name) {
+        if (firstContact == null) {
+            System.out.println("Sorry bro! Your contact list is empty");
+            return;
+        }
+
+        Contact currentContact = firstContact;
+        Contact prevContact = null;
+        if (firstContact.contactName.equalsIgnoreCase(name)) {
+            System.out.println("This is your first contact in the list which has been deleted.");
+            System.out.println("Contact Name " + firstContact.contactName);
+            firstContact = currentContact.nextContact;
+            return;
+        }
+
+        while (currentContact != null) {
+            if (currentContact.contactName.equalsIgnoreCase(name)){
+                if (currentContact == lastContact) {
+                    System.out.println("Your last contact is successfully deleted from the list");
+                    System.out.println("Contact Name " + lastContact.contactName);
+                    lastContact = prevContact;
+                    if (lastContact != null) {
+                        lastContact.nextContact = null;
+                    }
+                }else {
+                    System.out.println("Your contact is successfully deleted within your contact list");
+                    System.out.println("Contact Name "+currentContact.contactName);
+                    if (prevContact!=null){
+                        prevContact.nextContact = currentContact.nextContact;
+                    }
+                }
+                return;
+            }
+            prevContact = currentContact;
+            currentContact = currentContact.nextContact;
+        }
+        System.out.println("The contact "+name + " you are trying to delete is not found in the list.");
     }
 
     public boolean isNameExists(String name) {
-        Contact contact = head;
-
-        while (contact != null) {
-            if (contact.name.equalsIgnoreCase(name)) {
-                System.out.println("there is already contact present with the given name");
+        Contact currentContact = firstContact;
+        while (currentContact != null) {
+            if (currentContact.contactName.equalsIgnoreCase(name)) {
+                System.out.println("Please add a unique contact name");
                 return true;
             }
-            contact = contact.next;
+            currentContact = currentContact.nextContact;
         }
         return false;
     }
 
-    public boolean isPhoneNumberExists(String phoneNumber) {
-        Contact contact = head;
-        while (contact != null) {
-            if (contact.phoneNumber.equalsIgnoreCase(phoneNumber)) {
-                System.out.println("same number cannot be saved again");
+    public boolean isPhoneNumberExists(String phone) {
+        Contact currentContact = firstContact;
+        while (currentContact != null) {
+            if (currentContact.contactNumber.equalsIgnoreCase(phone)) {
+                System.out.println("Please add a unique phone number this number is already exist in your list");
                 return true;
             }
-            contact = contact.next;
+            currentContact = currentContact.nextContact;
         }
         return false;
     }
 
     public boolean isEmailExists(String email) {
-        Contact contact = head;
-        while (contact != null) {
-            if (contact.email.equalsIgnoreCase(email)) {
-                System.out.println("Please enter a unique email address");
+        Contact currentContact = firstContact;
+        while (currentContact != null) {
+            if (currentContact.emailAddress.equalsIgnoreCase(email)) {
+                System.out.println("Please add a unique email address as this email already present in your contact list");
                 return true;
             }
-            contact = contact.next;
+            currentContact = currentContact.nextContact;
         }
         return false;
-    }
-
-    public void searchContact(String name) {
-        // System.out.println("Searching for contact... "+name.toUpperCase());
-        if (head == null) {
-            System.out.println("There is no contact present in your contact list");
-            return;
-        }
-        Contact current = head;
-        while (current != null) {
-            if (current.name.equalsIgnoreCase(name)) {
-                System.out.println("Contact details are found! ");
-                System.out.println("Name: " + current.name);
-                System.out.println("Email: " + current.email);
-                System.out.println("Phone Number: " + current.phoneNumber);
-                return;
-            }
-            current = current.next;
-        }
-        System.out.println("No such contact is found in your list");
-    }
-
-    public void displayAllContacts() {
-        Contact curr = head;
-
-        if (head == null) {
-            System.out.println("Contact list is empty");
-            return;
-        }
-        System.out.println("contact list is below:");
-        while (curr != null) {
-            System.out.println("name " + curr.name + " email: " + curr.email + " phoneNumber " + curr.phoneNumber);
-            curr = curr.next;
-        }
-    }
-
-    private void deleteContact(String name) {
-        if (head == null) {
-            System.out.println("Contact list is empty");
-            return;
-        }
-
-        if (head.name.equalsIgnoreCase(name)) {
-            head = head.next;
-            System.out.println("contact is deleted from the head");
-            return;
-        }
-        Contact currContact = head;
-        Contact prevContact = null;
-
-        while (currContact != null && currContact.name != name) {
-            prevContact = currContact;
-            currContact = currContact.next;
-        }
-
-        if (currContact == null) {
-            System.out.println("There is no such contact present in your list");
-            return;
-        }
-
-        if (tail == currContact) {
-            tail = prevContact;
-            System.out.println("Contact is deleted from the tail.");
-            return;
-        }
-
-        System.out.println("Your desired contact is deleted.");
     }
 
     public static void main(String[] args) throws Exception {

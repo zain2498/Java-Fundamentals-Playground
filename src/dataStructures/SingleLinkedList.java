@@ -1,91 +1,88 @@
 package dataStructures;
 
 public class SingleLinkedList {
-
-    class Node {
-        int data;
-        Node next;
-
-        public Node(int data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
-    public Node head = null;
-    public Node tail = null;
-
-    public void addNode(int data) {
+   class Node{
+       int data;
+       Node nextNodeRef;
+       public Node(int data){
+           this.data = data;
+           this.nextNodeRef = null;
+       }
+   }
+    public Node head;
+    public Node tail;
+    public void addNode(int data){
         Node newNode = new Node(data);
-        if (head == null) {
+        if (head==null){
             head = newNode;
             tail = newNode;
-        } else {
-            tail.next = newNode;
+        }else {
+            tail.nextNodeRef = newNode;
             tail = newNode;
         }
     }
 
     public void searchNode(int key){
-
-        if(head == null){
-            System.out.println("there is no node present in the list");
+        Node curr = head;
+        if (head == null){
+            System.out.println("The list is empty");
             return;
         }
-        Node curr = head;
         while (curr!=null){
-            if (curr.data == key){
-                System.out.println("Node "+ curr.data+" is found ");
-                return;
+            if (curr.data==key){
+                System.out.println("key is found "+ key);
             }
-            curr = curr.next;
+                curr=curr.nextNodeRef;
+        }
+    }
+
+    public void displayNode(){
+        Node curr= head;
+        if (head == null){
+            System.out.println("List is empty");
+            return;
+        }
+        System.out.println("Displaying the list below:");
+        while (curr!=null){
+            System.out.print(curr.data + " ");
+            curr = curr.nextNodeRef;
         }
     }
 
     public void removeNode(int key){
-
-        if(head == null){
-            System.out.println("there is no node present in the list");
-            return;
-        }
-
-        if(head.data == key){
-            head = head.next;
-            System.out.println("Node is removed from the head");
-            return;
-        }
-
         Node curr = head;
         Node prev = null;
 
-        while (curr!=null && curr.data!=key){
-            prev = curr;
-            curr = curr.next;
-        }
-
-        if (curr == null){
-            System.out.println("there is no such key: "+key+" present in the node to be removed");
-            return;
-        }
-
-        if (tail ==curr){
-            System.out.println("Node is removed from the tail.");
-            tail = prev;
-            return;
-        }
-        System.out.println("this node is "+key+" removed");
-    }
-    public void displayNode() {
-        Node curr = head;
-
-        if (head == null) {
+        if (head == null){
             System.out.println("List is empty");
             return;
         }
-        System.out.println("elements of the node");
-        while (curr != null) {
-            System.out.print(curr.data + " ");
-            curr = curr.next;
+
+        if (head.data == key){
+            head = head.nextNodeRef;
+            System.out.println("Node is removed from head, Node: "+key);
+            return;
         }
+
+        while (curr!=null && curr.data!=key){
+            prev = curr;
+            curr = curr.nextNodeRef;
+        }
+
+        if (curr == null){
+            System.out.println("your requested node to remove is not found in the list");
+            return;
+        }
+
+        if (tail == curr){
+            tail = prev;
+            tail.nextNodeRef = null;
+            System.out.println("Your requested node is removed from the tail: "+key);
+            return;
+        }
+        prev.nextNodeRef=curr.nextNodeRef;
+        System.out.println("Node is removed from the list "+ key);
+
     }
 
     public static void main(String[] args) {
@@ -95,7 +92,7 @@ public class SingleLinkedList {
         singleLinkedList.addNode(5);
         singleLinkedList.addNode(10);
         singleLinkedList.searchNode(5);
-        singleLinkedList.removeNode(10);
+        singleLinkedList.removeNode(5);
         singleLinkedList.displayNode();
     }
 }
