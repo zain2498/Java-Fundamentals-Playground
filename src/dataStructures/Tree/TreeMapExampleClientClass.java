@@ -11,9 +11,9 @@ public class TreeMapExampleClientClass {
             scanner = new Scanner(System.in);
             mapObj = new TreeMapExample();
             System.out.println("Welcome to our Tree Data Structures");
-           Map<String,Integer> userMap = mapObj.processValues(scanner, mapObj);
+            Map<String, Integer> userMap = mapObj.processValues(scanner, mapObj);
             mapObj.setPopulatedMap(userMap);
-            mapObj.processUserChoice(scanner,mapObj);
+            mapObj.processUserChoice(scanner, mapObj);
         } catch (Exception e) {
             throw e;
         } finally {
