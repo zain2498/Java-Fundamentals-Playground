@@ -6,17 +6,21 @@ public class FundTransfer {
 
     private double balance;
 
+    //private constructor to prevent instantiation
     private FundTransfer() {
-    } //private constructor to prevent instantiation
+    }
 
     private static FundTransfer getInstance() {
         if (ft == null) {
             ft = new FundTransfer();
+        }else{
+            System.out.println("This is singleton in which you are not allowed to create another copy of the object.");
         }
         return ft;
     }
 
     public double getBalance() {
+        System.out.println("Your remaining balance is : " + balance);
         return balance;
     }
 
@@ -35,7 +39,6 @@ public class FundTransfer {
         }
 
         balance -= withdrawlAmount;
-        System.out.println("Your remaining balance is : " + balance);
     }
 
 
@@ -47,6 +50,6 @@ public class FundTransfer {
         FundTransfer ft2 = FundTransfer.getInstance();
         System.out.println("second " + ft2.hashCode());
         ft2.cashWithdrawl(300.2);
-
+        ft1.getBalance();
     }
 }

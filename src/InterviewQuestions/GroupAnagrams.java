@@ -7,15 +7,15 @@ public class GroupAnagrams {
         if (str == null || str.length == 0) {
             return new ArrayList<>();
         }
-        Map<String, List<String>> map = new HashMap<>();
 
-        for (String s : str) {
+        Map<String, List<String>> map = new HashMap<>();
+        for (String s : str){
             char[] charArr = s.toCharArray();
             Arrays.sort(charArr);
-            String sorted = new String(charArr);
+            String sortedKey = new String(charArr);
 
-            map.putIfAbsent(sorted, new ArrayList<>());
-            map.get(sorted).add(s);
+            map.putIfAbsent(sortedKey, new ArrayList<>());
+            map.get(sortedKey).add(s);
         }
 
         return new ArrayList<>(map.values());

@@ -11,10 +11,9 @@ public class palindrome {
     }
 
     public static boolean isPalindrome(String str){
-        String cleanedStr = str.replaceAll("[^a-zA-Z0-9]","");
-        String revString = new StringBuilder(cleanedStr).reverse().toString();
-
-        if (cleanedStr.equalsIgnoreCase(revString)){
+        String cleanedSt = str.replaceAll("[^a-zA-Z0-9]", "");
+        String revSt = new StringBuilder(cleanedSt).reverse().toString();
+        if (cleanedSt.equalsIgnoreCase(revSt)){
             return true;
         }
         return false;
