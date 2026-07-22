@@ -8,14 +8,14 @@ public class LeadersInArray {
 
     public static List<Integer> findLeaders(int[] arr) {
         List<Integer> leaders = new ArrayList<>();
-        int sizeOfArray = arr.length;
-        int rightMax = arr[sizeOfArray - 1];
-        leaders.add(rightMax);
+        int sizeOfArr = arr.length;
+        int rightMostEle = arr[sizeOfArr -1];
+        leaders.add(rightMostEle);
 
-        for (int i = sizeOfArray -2; i >=0; i--){
-            if (arr[i] > rightMax){
-                rightMax = arr[i];
-                leaders.add(rightMax);
+        for (int i = sizeOfArr -2; i >0; i--){
+            if (arr[i] > rightMostEle){
+                rightMostEle = arr[i];
+                leaders.add(rightMostEle);
             }
         }
         Collections.reverse(leaders);

@@ -1,8 +1,6 @@
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class test {
-
 
     public static String SerialNumber(String str) {
         boolean isSeriealNumber = false; //11.124.167
@@ -58,10 +56,20 @@ public class test {
 
     public static void main(String[] args) {
 
+    mapInterface();
+//        Scanner s = new Scanner(System.in);
+//        System.out.println("please enter number : ");
+//        System.out.print(SerialNumber(s.nextLine()));
+    }
 
-        Scanner s = new Scanner(System.in);
-        System.out.println("please enter number : ");
-        System.out.print(SerialNumber(s.nextLine()));
+    public static void mapInterface(){
+        Map<String, String> map = new HashMap<>();
+        map.put("role", "user");
+
+        String olderValue = map.put("role", "admin");
+
+        System.out.println("Older value was: " + olderValue); // Prints: User
+        System.out.println("Current value is: " + map.get("role")); // Prints: Admin
     }
 
 

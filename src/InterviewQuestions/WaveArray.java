@@ -5,12 +5,13 @@ import java.util.Arrays;
 public class WaveArray {
 
     public static int[] convertToWave(int[] arr) {
-        int sizeOfArray = arr.length;
-        int tempVariable = 0;
-        for (int i =0; i < sizeOfArray - 1; i = i +2) {
-            tempVariable = arr[i];
-            arr[i] = arr[i + 1];
-            arr[i + 1] = tempVariable;
+        int sizeOfArr = arr.length;
+        int tempVar = 0;
+
+        for (int i =0; i < sizeOfArr -1; i = i +2){
+            tempVar = arr[i];
+            arr[i] = arr[i+1];
+            arr[i+1] = tempVar;
         }
         return arr;
     }
